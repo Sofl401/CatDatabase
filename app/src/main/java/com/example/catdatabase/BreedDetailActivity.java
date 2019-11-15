@@ -21,7 +21,6 @@ import com.bumptech.glide.Glide;
 import com.example.catdatabase.model.BreedPhotos;
 import com.google.gson.Gson;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -95,9 +94,14 @@ public class BreedDetailActivity extends AppCompatActivity {
                 fav.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dList.add(loadedCat.get(0));
                         String name = loadedCat.get(0).getBreeds().get(0).getName();
-                        Toast.makeText(getApplicationContext(), name + " has been added to favourites!", Toast.LENGTH_SHORT).show();
+                        if (dList.contains(loadedCat.get(0))){
+                            Toast.makeText(getApplicationContext(), name + " is already in your favourites!", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            dList.add(loadedCat.get(0));
+                            Toast.makeText(getApplicationContext(), name + " has been added to favourites!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
             }

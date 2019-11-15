@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavAdapterViewHolder> {
     private static ArrayList<BreedPhotos> breedsList = new ArrayList<>();
 
-    public void setData(ArrayList<BreedPhotos> breedsList){
+    public void setData(ArrayList<BreedPhotos> breedsList) {
         this.breedsList = breedsList;
     }
 
@@ -34,32 +35,30 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.FavAdapterViewHo
     @Override
     public void onBindViewHolder(@NonNull FavAdapterViewHolder holder, int position) {
         final String cat = breedsList.get(position).getBreeds().get(0).getId();
-        if (breedsList.isEmpty()) {
-            holder.text.setText("No Favourites, go add some?");
-        }
-        else {
-            holder.text.setText(breedsList.get(position).getBreeds().get(0).getName());
-//            holder.view.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Context context = v.getContext();
-//                    Intent intent = new Intent(context, BreedDetailActivity.class);
-//                    intent.putExtra("BreedID", cat);
-//                }
-//            });
-        }
+        holder.text.setText(breedsList.get(position).getBreeds().get(0).getName());
+            holder.view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, BreedDetailActivity.class);
+                    intent.putExtra("BreedID", cat);
+                    context.startActivity(intent);
+                }
+            });
     }
+
 
     @Override
     public int getItemCount() {
         return breedsList.size();
 
     }
+
     public class FavAdapterViewHolder extends RecyclerView.ViewHolder {
         public View view;
         public TextView text;
 
-        public FavAdapterViewHolder(@NonNull View v){
+        public FavAdapterViewHolder(@NonNull View v) {
             super(v);
             view = v;
             text = view.findViewById(R.id.textView);
